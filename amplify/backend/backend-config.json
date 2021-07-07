@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "frontistramplifyapp504eb198": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

@@ -1,8 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import Amplify from 'aws-amplify'
+import config from '../src/aws-exports'
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+Amplify.configure(config)
 
-export default function Home() {
+function Home() {
   return (
     <div className={styles.container}>
       <Head>
@@ -50,6 +54,7 @@ export default function Home() {
             </p>
           </a>
         </div>
+        <AmplifySignOut />
       </main>
 
       <footer className={styles.footer}>
@@ -67,3 +72,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default withAuthenticator(Home)
