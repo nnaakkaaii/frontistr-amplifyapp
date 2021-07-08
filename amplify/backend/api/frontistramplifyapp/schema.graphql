@@ -1,0 +1,20 @@
+type Cad @model {
+  id: ID!
+  name: String!
+  thumbnail: String
+  cad_file: String
+  cad_size: Float
+  cad_thumbnail: String
+  fem_file: String
+  fem_thumbnail: String
+  fem_size: Float
+  element_type: String
+  num_elements: Int
+  num_nodes: Int
+  matrix_file: String
+  matrix_thumbnail: String
+  matrix_size: Float
+  description: String!
+  author: String
+  contact: String
+}
