@@ -67,7 +67,7 @@ function Item(props) {
                             </div>
                         </div> :
                         <div className="card" style={{height: cardHeight, width: cardWidth}}>
-                            <div className="d-flex align-items-center justify-content-center">
+                            <div className="mx-auto my-auto">
                                 <h1>N.A.</h1>
                             </div>
                         </div>
@@ -96,7 +96,7 @@ function Item(props) {
                             </div>
                         </div> :
                         <div className="card" style={{height: cardHeight, width: cardWidth}}>
-                            <div className="d-flex align-items-center justify-content-center">
+                            <div className="mx-auto my-auto">
                                 <h1>N.A.</h1>
                             </div>
                         </div>
