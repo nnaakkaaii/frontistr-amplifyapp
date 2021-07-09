@@ -39,12 +39,12 @@ export default function Card3(props) {
                     <div className="form-group">
                         <label htmlFor="inputFEMFile">■ FEM Mesh File</label>
                         <MyInput id="inputFEMFile" onChange={doFemFileChange} />
-                        <small><p className="text-right">[.frd] are allowed.</p></small>
+                        <small><p className="text-right">[.msh/.inp] are allowed.</p></small>
                     </div>
                     <div className="form-group">
                         <label htmlFor="inputFEMThumbnail">■ FEM Sample Image</label>
                         <MyInput id="inputFEMThumbnail" onChange={doFemThumbnailChange} />
-                        <small><p className="text-right">[.png/.jpg] are allowed.</p></small>
+                        <small><p className="text-right">[.png/.jpg/.jpeg] are allowed.</p></small>
                     </div>
                     <div className="form-group">
                         <label htmlFor="inputElementType">■ FEM Element Type</label>
@@ -53,7 +53,8 @@ export default function Card3(props) {
                             <option value="segment">segment</option>
                             <option value="triangle">triangle</option>
                             <option value="quadrangle">quadrangle</option>
-                            <option value="tetrahedron">tetrahedron</option>
+                            <option value="tetrahedron 1st order">tetrahedron 1st order</option>
+                            <option value="tetrahedron 2nd order">tetrahedron 2nd order</option>
                             <option value="hexahedron">hexahedron</option>
                             <option value="pentahedron">pentahedron</option>
                             <option value="pyramid">pyramid</option>

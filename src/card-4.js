@@ -24,12 +24,12 @@ export default function Card4(props) {
                     <div className="form-group">
                         <label htmlFor="inputMatrixFile">■ Matrix File</label>
                         <MyInput id="inputMatrixFile" onChange={doMatrixFileChange} />
-                        <small><p className="text-right">[] are allowed.</p></small>
+                        <small><p className="text-right">[.csr/.ill] are allowed.</p></small>
                     </div>
                     <div className="form-group">
                         <label htmlFor="inputMatrixThumbnail">■ Matrix Sample Image</label>
                         <MyInput id="inputMatrixThumbnail" onChange={doMatrixThumbnailChange} />
-                        <small><p className="text-right">[.png/.jpg] are allowed.</p></small>
+                        <small><p className="text-right">[.png/.jpg/.jpeg] are allowed.</p></small>
                     </div>
                 </div>
             </div>

@@ -4,8 +4,8 @@ import Item from './item'
 
 
 function Cad(props) {
-    let data = props.cads.map(cad =>
-        <Item value={cad} mode={props.mode} downloads={props.downloads} setDownloads={props.setDownloads} />
+    let data = props.cads.map((cad, id) =>
+        <Item id={id} value={cad} mode={props.mode} downloads={props.downloads} setDownloads={props.setDownloads} />
     )
 
     return (
@@ -13,10 +13,11 @@ function Cad(props) {
             <table className="table my-5">
                 <thead>
                 <tr>
+                    <th className="text-center">ID</th>
                     <th className="text-center">Name</th>
-                    <th className="text-center">CAD Geometry</th>
-                    <th className="text-center">FEM Mesh</th>
-                    <th className="text-center">Matrix</th>
+                    <th className="text-center">CAD</th>
+                    <th className="text-center">FE Mesh</th>
+                    <th className="text-center">Matrix (A, b)</th>
                     <th className="text-center">Description</th>
                 </tr>
                 </thead>

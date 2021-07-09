@@ -1,8 +1,5 @@
 
-const thumbnailExtensions = ['png', 'jpg', 'jpeg']
-const cadFileExtensions = ['igs', 'stl']
-const femFileExtensions = ['frd']
-const matrixFileExtensions = []
+import { thumbnailDataType, cadDataType, femDataType, matrixDataType } from "./data-types";
 
 
 export function doCheckCard1(name, thumbnailName, thumbnailSize, description, author, contact) {
@@ -10,7 +7,7 @@ export function doCheckCard1(name, thumbnailName, thumbnailSize, description, au
         alert("name / thumbnail / description must not be empty")
         return false
     }
-    if (!thumbnailExtensions.includes(thumbnailName.split('.')[1])) {
+    if (!thumbnailDataType[thumbnailName.split('.')[1]]) {
         alert("extension of thumbnail is invalid")
         return false
     }
@@ -27,11 +24,11 @@ export function doCheckCard2(cadFileName, cadFileSize, cadThumbnailName, cadThum
             alert("if you upload CAD file, you must also upload CAD sample image")
             return false
         }
-        if (!cadFileExtensions.includes(cadFileName.split('.')[1])) {
+        if (!cadDataType[cadFileName.split('.')[1]]) {
             alert("extension of CAD file is invalid")
             return false
         }
-        if (!thumbnailExtensions.includes(cadThumbnailName.split('.')[1])) {
+        if (!thumbnailDataType[cadThumbnailName.split('.')[1]]) {
             alert("extension of CAD sample image is invalid")
             return false
         }
@@ -58,11 +55,11 @@ export function doCheckCard3(femFileName, femFileSize, femThumbnailName, femThum
             alert("if you upload FEM file. you must also upload FEM sample image")
             return false
         }
-        if (!femFileExtensions.includes(femFileName.split('.')[1])) {
+        if (!femDataType[femFileName.split('.')[1]]) {
             alert("extension of CAD file is invalid")
             return false
         }
-        if (!thumbnailExtensions.includes(femThumbnailName.split('.')[1])) {
+        if (!thumbnailDataType[femThumbnailName.split('.')[1]]) {
             alert("extension of CAD sample image is invalid")
             return false
         }
@@ -93,11 +90,11 @@ export function doCheckCard4(matrixFileName, matrixFileSize, matrixThumbnailName
             alert("if you upload Matrix file, you must also upload Matrix sample image")
             return false
         }
-        if (!matrixFileExtensions.includes(matrixFileName.split('.')[1])) {
+        if (!matrixDataType[matrixFileName.split('.')[1]]) {
             alert("extension of Matrix file is invalid")
             return false
         }
-        if (!thumbnailExtensions.includes(matrixThumbnailName.split('.')[1])) {
+        if (!thumbnailDataType[matrixThumbnailName.split('.')[1]]) {
             alert("extension of Matrix sample image is invalid")
             return false
         }

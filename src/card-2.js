@@ -25,12 +25,12 @@ export default function Card2(props) {
                     <div className="form-group">
                         <label htmlFor="inputCADFile">■ CAD Geometry File</label>
                         <MyInput id="inputCADFile" onChange={doCADFileChange} />
-                        <small><p className="text-right">[.igs/.stl] are allowed.</p></small>
+                        <small><p className="text-right">[.igs/.stl/.stp/.step] are allowed.</p></small>
                     </div>
                     <div className="form-group">
                         <label htmlFor="inputCADThumbnail">■ CAD Sample Image</label>
                         <MyInput id="inputCADThumbnail" onChange={doCADThumbnailChange} />
-                        <small><p className="text-right">[.png/.jpg] are allowed.</p></small>
+                        <small><p className="text-right">[.png/.jpg/.jpeg] are allowed.</p></small>
                     </div>
                 </div>
             </div>
