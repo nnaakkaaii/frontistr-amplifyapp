@@ -61,7 +61,8 @@ function Upload(props) {
     const [matrixThumbnailName, setMatrixThumbnailName] = useState('')
     const [matrixThumbnailSize, setMatrixThumbnailSize] = useState('')
 
-    const doSubmit = () => {
+    const doSubmit = (e) => {
+        e.preventDefault()
         const card1IsOk = doCheckCard1(name, thumbnailName, thumbnailSize, description, author, contact)
         const card2IsOk = doCheckCard2(cadFileName, cadFileSize, cadThumbnailName, cadThumbnailSize)
         const card3IsOk = doCheckCard3(femFile, cntFile, datFile1, datFile2, femThumbnailName, femThumbnailSize, elementType, elementCount, nodeCount)
