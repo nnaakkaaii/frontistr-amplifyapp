@@ -1,5 +1,5 @@
 
-import { thumbnailDataType, cadDataType, femDataType, matrixDataType } from "./data-types";
+import {thumbnailDataType, cadDataType, femDataType, matrixDataType, cntDataType, dat1DataType, dat2DataType} from "./data-types";
 
 
 export function doCheckCard1(name, thumbnailName, thumbnailSize, description, author, contact) {
@@ -49,31 +49,65 @@ export function doCheckCard2(cadFileName, cadFileSize, cadThumbnailName, cadThum
     return true
 }
 
-export function doCheckCard3(femFileName, femFileSize, femThumbnailName, femThumbnailSize, elementType, elementCount, nodeCount) {
-    if (femFileName) {
-        if (!femThumbnailName) {
-            alert("if you upload FEM file. you must also upload FEM sample image")
+export function doCheckCard3(femFile, cntFile, datFile1, datFile2, femThumbnailName, femThumbnailSize, elementType, elementCount, nodeCount) {
+    if (femFile && cntFile && datFile1 && femThumbnailName) {
+        if (!femDataType[femFile.name.split('.')[1]]) {
+            alert("extension of FEM file is invalid")
             return false
         }
-        if (!femDataType[femFileName.split('.')[1]]) {
-            alert("extension of CAD file is invalid")
+        if (!cntDataType[cntFile.name.split('.')[1]]) {
+            alert("extension of Cnt file is invalid")
+            return false
+        }
+        if (!dat1DataType[datFile1.name.split('.')[1]]) {
+            alert("extension of Dat file 1 is invalid")
+            return false
+        }
+        if (!dat2DataType[datFile2.name.split('.')[1]]) {
+            alert("extension of Dat file 2 is invalid")
             return false
         }
         if (!thumbnailDataType[femThumbnailName.split('.')[1]]) {
-            alert("extension of CAD sample image is invalid")
+            alert("extension of FEM sample image is invalid")
             return false
         }
-        if (femFileSize > 1000000000) {
-            alert("size of FEM file must be lower than 1GB")
+        if (femFile.size > 10000000000) {
+            alert("size of FEM file must be lower than 10GB")
+            return false
+        }
+        if (cntFile.size > 1000000000) {
+            alert("size of Cnt file must be lower than 1GB")
+            return false
+        }
+        if (datFile1.size > 1000000000) {
+            alert("size of Dat file 1 must be lower than 1GB")
+            return false
+        }
+        if (datFile2.size > 1000000000) {
+            alert("size of Dat file 2 must be lower than 1GB")
             return false
         }
         if (femThumbnailSize > 1000000000) {
             alert("size of FEM sample image must be lower than 1GB")
             return false
         }
+    } else if (!(femFile) && !(cntFile) && !(datFile1) && !(datFile2) && !(femThumbnailName)) {
+        return true
     } else {
-        if (femThumbnailName) {
-            alert("if you don't upload FEM file, you must not upload FEM sample image")
+        if (!femFile) {
+            alert("if you don't upload FEM file, you must not upload Cnt File, Dat Files and FEM sample image")
+            return false
+        }
+        if (!cntFile) {
+            alert("if you upload FEM file. you must also upload Cnt File")
+            return false
+        }
+        if (!datFile1) {
+            alert("if you upload FEM file. you must also upload Dat File1")
+            return false
+        }
+        if (!femThumbnailName) {
+            alert("if you upload FEM file. you must also upload FEM sample image")
             return false
         }
         if (elementType || elementCount > 0 || nodeCount > 0) {
@@ -115,8 +149,8 @@ export function doCheckCard4(matrixFileName, matrixFileSize, matrixThumbnailName
     return true
 }
 
-export function doCheckCard234(cadFileName, femFileName, matrixFileName) {
-    if (!cadFileName && !femFileName && !matrixFileName) {
+export function doCheckCard234(cadFileName, femFile, matrixFileName) {
+    if (!cadFileName && !femFile && !matrixFileName) {
         alert("either of CAD / FEM / Matrix file must be uploaded")
         return false
     }

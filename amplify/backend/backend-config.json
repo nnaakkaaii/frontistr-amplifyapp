@@ -16,8 +16,8 @@
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 365,
-              "description": "default api key for frontistr amplifyapp"
+              "apiKeyExpirationDays": 7,
+              "description": ""
             }
           },
           "additionalAuthenticationProviders": []

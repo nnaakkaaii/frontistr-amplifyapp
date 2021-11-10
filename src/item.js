@@ -41,6 +41,18 @@ function Item(props) {
         </div>
     )
 
+    const formatFileSize = (fileSize) => {
+        if (fileSize < 1000) {
+            return fileSize.toLocaleString() + ' B'
+        } else if (fileSize < 1000000) {
+            return (Math.floor(fileSize / 1000)).toLocaleString() + ' kB'
+        } else if (fileSize < 1000000000) {
+            return (Math.floor(fileSize / 1000000)).toLocaleString() + ' MB'
+        } else {
+            return (Math.floor(fileSize / 1000000000)).toLocaleString() + ' GB'
+        }
+    }
+
     return (
         <tr>
             <th style={th}>
@@ -63,7 +75,7 @@ function Item(props) {
                             <img src={props.value.cad_thumbnail_src} height={imgHeight} width={imgWidthDownload}/>
                             <div className="card-body">
                                 <SmallText header="Data Type" body={cadDataType[props.value.cad_file.split('.')[1]]} />
-                                <SmallText header="File Size" body={props.value.cad_size.toLocaleString() + " B"} />
+                                <SmallText header="File Size" body={formatFileSize(props.value.cad_size)} />
                             </div>
                         </div> :
                         <div className="card" style={{height: cardHeight, width: cardWidth}}>
@@ -80,7 +92,7 @@ function Item(props) {
                             <img src={props.value.fem_thumbnail_src} height={imgHeight} width={imgWidthDownload} />
                             <div className="card-body">
                                 <SmallText header="Data Type" body={femDataType[props.value.fem_file.split('.')[1]]} />
-                                <SmallText header="File Size" body={props.value.fem_size.toLocaleString() + " B"} />
+                                <SmallText header="File Size" body={formatFileSize(props.value.fem_size)} />
                                 {
                                     props.value.element_type &&
                                         <SmallText header="Element Type" body={props.value.element_type} />
@@ -109,7 +121,7 @@ function Item(props) {
                             <img src={props.value.matrix_thumbnail_src} height={imgHeight} width={imgWidthDownload} />
                             <div className="card-body">
                                 <SmallText header="Storage Format" body={matrixDataType[props.value.matrix_file.split('.')[1]]} />
-                                <SmallText header="File Size" body={props.value.matrix_size} />
+                                <SmallText header="File Size" body={formatFileSize(props.value.matrix_size)} />
                             </div>
                         </div> :
                         <div className="card" style={{height: cardHeight, width: cardWidth}}>

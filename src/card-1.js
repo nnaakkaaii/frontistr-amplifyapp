@@ -41,7 +41,7 @@ export default function Card1(props) {
                     </div>
                     <div className="form-group">
                         <label htmlFor="inputThumbnail">■ thumbnail</label>
-                        <MyInput id="inputThumbnail" onChange={doThumbnailChange} />
+                        <MyInput id="inputThumbnail" onChange={doThumbnailChange} upload={true} />
                         <small><p className="text-right">[.png/.jpg/.jpeg] are allowed.</p></small>
                     </div>
                     <div className="form-group">

@@ -1,12 +1,38 @@
 import '../styles/Home.module.css'
 import React, { useState } from 'react'
-import { API } from 'aws-amplify';
+import {API, Storage} from 'aws-amplify';
 import { createCad as createCadMutation } from './graphql/mutations';
 import Card1 from './card-1'
 import Card2 from './card-2'
 import Card3 from './card-3'
 import Card4 from './card-4'
 import { doCheckCard1, doCheckCard2, doCheckCard3, doCheckCard4, doCheckCard234 } from "./utils"
+import JSZip from "jszip";
+
+
+const zip = (femFile, cntFile, datFile1, datFile2, setArchivedFile) => {
+    if (!femFile || !cntFile || !datFile1) {
+        return
+    }
+    let archived = new JSZip()
+    archived.file(femFile.name, femFile)
+    archived.file(cntFile.name, cntFile)
+    archived.file(datFile1.name, datFile1)
+    if (datFile2) {
+        archived.file(datFile2.name, datFile2)
+    }
+    archived.generateAsync({type:"blob"}).then((content) => {
+        return new File(
+            [content],
+            femFile.name.split('.')[0] + '.zip',
+        { type: "application/octet-stream" }
+        )
+    }).then((content) => {
+        Storage.put(content.name, content).then(() => {
+            setArchivedFile(content)
+        })
+    })
+}
 
 
 function Upload(props) {
@@ -20,8 +46,11 @@ function Upload(props) {
     const [cadFileSize, setCadFileSize] = useState(0)
     const [cadThumbnailName, setCadThumbnailName] = useState('')
     const [cadThumbnailSize, setCadThumbnailSize] = useState('')
-    const [femFileName, setFemFileName] = useState('')
-    const [femFileSize, setFemFileSize] = useState(0)
+    const [archivedFile, setArchivedFile] = useState()
+    const [femFile, setFemFile] = useState()
+    const [cntFile, setCntFile] = useState()
+    const [datFile1, setDatFile1] = useState()
+    const [datFile2, setDatFile2] = useState()
     const [femThumbnailName, setFemThumbnailName] = useState('')
     const [femThumbnailSize, setFemThumbnailSize] = useState('')
     const [elementType, setElementType] = useState('')
@@ -35,9 +64,9 @@ function Upload(props) {
     const doSubmit = () => {
         const card1IsOk = doCheckCard1(name, thumbnailName, thumbnailSize, description, author, contact)
         const card2IsOk = doCheckCard2(cadFileName, cadFileSize, cadThumbnailName, cadThumbnailSize)
-        const card3IsOk = doCheckCard3(femFileName, femFileSize, femThumbnailName, cadThumbnailSize, elementType, elementCount, nodeCount)
+        const card3IsOk = doCheckCard3(femFile, cntFile, datFile1, datFile2, femThumbnailName, femThumbnailSize, elementType, elementCount, nodeCount)
         const card4IsOk = doCheckCard4(matrixFileName, matrixFileSize, matrixThumbnailName, matrixThumbnailSize)
-        const card234IsOk = doCheckCard234(cadFileName, femFileName, matrixFileName)
+        const card234IsOk = doCheckCard234(cadFileName, femFile, matrixFileName)
         if (!card1IsOk) {
             setName(''); setThumbnailName(''); setDescription(''); setAuthor(''); setContact('');
             return
@@ -47,7 +76,8 @@ function Upload(props) {
             return
         }
         if (!card3IsOk) {
-            setFemFileName(''); setFemFileSize(0); setFemThumbnailName(''); setFemThumbnailSize(0); setElementType(''); setElementCount(0); setNodeCount(0);
+            setFemFile(''); setCntFile(''); setDatFile1(''); setDatFile2('');
+            setFemThumbnailName(''); setFemThumbnailSize(0); setElementType(''); setElementCount(0); setNodeCount(0);
             return
         }
         if (!card4IsOk) {
@@ -57,14 +87,15 @@ function Upload(props) {
         if (!card234IsOk) {
             return
         }
+        zip(femFile, cntFile, datFile1, datFile2, setArchivedFile)
         const formData = {
             name: name,
             thumbnail: thumbnailName,
             cad_file: cadFileName !== '' ? cadFileName : null,
             cad_size: cadFileSize > 0 ? cadFileSize : null,
             cad_thumbnail: cadThumbnailName !== '' ? cadThumbnailName : null,
-            fem_file: femFileName !== '' ? femFileName : null,
-            fem_size: femFileSize > 0 ? femFileSize : null,
+            fem_file: archivedFile !== '' ? archivedFile.name : null,
+            fem_size: archivedFile !== '' ? archivedFile.size : null,
             fem_thumbnail: femThumbnailName !== '' ? femThumbnailName : null,
             element_type: elementType !== '' ? elementType : null,
             num_elements: elementCount > 0 ? elementCount : null,
@@ -86,8 +117,7 @@ function Upload(props) {
             setCadFileSize(0);
             setCadThumbnailName('');
             setCadThumbnailSize(0);
-            setFemFileName('');
-            setFemFileSize(0);
+            setArchivedFile('');
             setFemThumbnailName('');
             setFemThumbnailSize(0);
             setElementType('');
@@ -106,7 +136,8 @@ function Upload(props) {
                 <div className="card-group">
                     <Card1 setName={setName} setThumbnailName={setThumbnailName} setThumbnailSize={setThumbnailSize} setDescription={setDescription} setAuthor={setAuthor} setContact={setContact} />
                     <Card2 setCadFileName={setCadFileName} setCadFileSize={setCadFileSize} setCadThumbnailName={setCadThumbnailName} setCadThumbnailSize={setCadThumbnailSize} />
-                    <Card3 setFemFileName={setFemFileName} setFemFileSize={setFemFileSize} setFemThumbnailName={setFemThumbnailName} setFemThumbnailSize={setFemThumbnailSize} setElementType={setElementType} setElementCount={setElementCount} setNodeCount={setNodeCount}/>
+                    <Card3 setFemFile={setFemFile} setCntFile={setCntFile} setDatFile1={setDatFile1} setDatFile2={setDatFile2}
+                           setFemThumbnailName={setFemThumbnailName} setFemThumbnailSize={setFemThumbnailSize} setElementType={setElementType} setElementCount={setElementCount} setNodeCount={setNodeCount}/>
                     <Card4 setMatrixFileName={setMatrixFileName} setMatrixFileSize={setMatrixFileSize} setMatrixThumbnailName={setMatrixThumbnailName} setMatrixThumbnailSize={setMatrixThumbnailSize} />
                 </div>
                 <div className="row justify-content-center my-3">

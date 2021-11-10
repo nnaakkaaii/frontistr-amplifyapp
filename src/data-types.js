@@ -18,6 +18,18 @@ export const femDataType = {
     'frd': 'frd'
 }
 
+export const cntDataType = {
+    'cnt': 'cnt (FrontISTR)',
+}
+
+export const dat1DataType = {
+    'dat': 'dat (FrontISTR)',
+}
+
+export const dat2DataType = {
+    'dat': 'dat (FrontISTR)',
+}
+
 export const matrixDataType = {
     'csr': 'csr (CSR)',
     'ill': 'ill (ILL)',

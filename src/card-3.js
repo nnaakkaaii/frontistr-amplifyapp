@@ -6,8 +6,22 @@ import React from "react";
 export default function Card3(props) {
     const doFemFileChange = (e) => {
         if (e.target.files.length > 0) {
-            props.setFemFileName(e.target.files[0].name)
-            props.setFemFileSize(e.target.files[0].size)
+            props.setFemFile(e.target.files[0])
+        }
+    }
+    const doCntFileChange = (e) => {
+        if (e.target.files.length > 0) {
+            props.setCntFile(e.target.files[0])
+        }
+    }
+    const doDatFile1Change = (e) => {
+        if (e.target.files.length > 0) {
+            props.setDatFile1(e.target.files[0])
+        }
+    }
+    const doDatFile2Change = (e) => {
+        if (e.target.files.length > 0) {
+            props.setDatFile2(e.target.files[0])
         }
     }
     const doFemThumbnailChange = (e) => {
@@ -33,17 +47,32 @@ export default function Card3(props) {
     }
     return (
         <div className="card my-2">
-            <div className="card-header text-center">FEM file (Optional)</div>
+            <div className="card-header text-center">FrontISTR file (Optional)</div>
             <div className="card-body">
                 <div className="card-text">
                     <div className="form-group">
-                        <label htmlFor="inputFEMFile">■ FEM Mesh File</label>
-                        <MyInput id="inputFEMFile" onChange={doFemFileChange} />
+                        <label htmlFor="inputFEMFile">■ FrontISTR Mesh File</label>
+                        <MyInput id="inputFEMFile" onChange={doFemFileChange} upload={false} />
                         <small><p className="text-right">[.msh/.inp] are allowed.</p></small>
                     </div>
                     <div className="form-group">
+                        <label htmlFor="inputCntFile">■ FrontISTR Control File (.cnt)</label>
+                        <MyInput id="inputCntFile" onChange={doCntFileChange} upload={false} />
+                        <small><p className="text-right">[.cnt] are allowed.</p></small>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="inputDatFile1">■ FrontISTR Control File (*-ctrl.dat)</label>
+                        <MyInput id="inputDatFile1" onChange={doDatFile1Change} upload={false} />
+                        <small><p className="text-right">[.dat] are allowed.</p> </small>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="inputDatFile2">■ (Optional) FrontISTR Control File (*-part-ctrl.dat)</label>
+                        <MyInput id="inputDatFile2" onChange={doDatFile2Change} upload={false} />
+                        <small><p className="text-right">[.dat] are allowed.</p> </small>
+                    </div>
+                    <div className="form-group">
                         <label htmlFor="inputFEMThumbnail">■ FEM Sample Image</label>
-                        <MyInput id="inputFEMThumbnail" onChange={doFemThumbnailChange} />
+                        <MyInput id="inputFEMThumbnail" onChange={doFemThumbnailChange} upload={true} />
                         <small><p className="text-right">[.png/.jpg/.jpeg] are allowed.</p></small>
                     </div>
                     <div className="form-group">
@@ -61,11 +90,11 @@ export default function Card3(props) {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="inputElementCount">■ FEM Element Count</label>
+                        <label htmlFor="inputElementCount">■ The number of FEM Elements</label>
                         <input type="number" className="form-control" id="inputElementCount" placeholder="the number of FEM Element" onChange={doElementCountChange}/>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="inputNodeCount">■ FEM Node Count</label>
+                        <label htmlFor="inputNodeCount">■ The number of FEM Nodes</label>
                         <input type="number" className="form-control" id="inputNodeCount" placeholder="the number of FEM Node" onChange={doNodeCountChange}/>
                     </div>
                 </div>

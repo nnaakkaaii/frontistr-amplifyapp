@@ -16,7 +16,7 @@ function Cad(props) {
                     <th className="text-center">ID</th>
                     <th className="text-center">Name</th>
                     <th className="text-center">CAD</th>
-                    <th className="text-center">FE Mesh</th>
+                    <th className="text-center">FrontISTR Data</th>
                     <th className="text-center">Matrix (A, b)</th>
                     <th className="text-center">Description</th>
                 </tr>

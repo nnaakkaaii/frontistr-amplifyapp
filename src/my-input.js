@@ -10,7 +10,11 @@ function MyInput(props) {
         props.onChange(e)
         if (e.target.files.length > 0) {
             const file = e.target.files[0]
-            Storage.put(file.name, file).then(() => {setInp(file.name)})
+            if (props.upload) {
+                Storage.put(file.name, file).then(() => {setInp(file.name)})
+            } else {
+                setInp(file.name)
+            }
         } else {
             setInp('')
         }

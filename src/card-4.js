@@ -23,12 +23,12 @@ export default function Card4(props) {
                 <div className="card-text">
                     <div className="form-group">
                         <label htmlFor="inputMatrixFile">■ Matrix File</label>
-                        <MyInput id="inputMatrixFile" onChange={doMatrixFileChange} />
+                        <MyInput id="inputMatrixFile" onChange={doMatrixFileChange} upload={true} />
                         <small><p className="text-right">[.csr/.ill] are allowed.</p></small>
                     </div>
                     <div className="form-group">
                         <label htmlFor="inputMatrixThumbnail">■ Matrix Sample Image</label>
-                        <MyInput id="inputMatrixThumbnail" onChange={doMatrixThumbnailChange} />
+                        <MyInput id="inputMatrixThumbnail" onChange={doMatrixThumbnailChange} upload={true} />
                         <small><p className="text-right">[.png/.jpg/.jpeg] are allowed.</p></small>
                     </div>
                 </div>
