@@ -59,6 +59,7 @@ function Upload(props) {
     const [matrixThumbnailSize, setMatrixThumbnailSize] = useState('')
 
     const doSubmit = async (e) => {
+        console.log('doSubmit')
         e.preventDefault()
         setDisabled(true)
         const card1IsOk = doCheckCard1(name, thumbnailName, thumbnailSize, description, author, contact)
@@ -70,23 +71,28 @@ function Upload(props) {
             setName(''); setThumbnailName(''); setDescription(''); setAuthor(''); setContact('');
             return
         }
+        console.log('card1IsOk')
         if (!card2IsOk) {
             setCadFileName(''); setCadFileSize(0); setCadThumbnailName(''); setCadThumbnailSize(0);
             return
         }
+        console.log('card2IsOk')
         if (!card3IsOk) {
             setFemFile(''); setCntFile(''); setDatFile1(''); setDatFile2('');
             setFemThumbnailName(''); setFemThumbnailSize(0); setElementType(''); setElementCount(0); setNodeCount(0);
             return
         }
+        console.log('card3IsOk')
         if (!card4IsOk) {
             setMatrixFileName(''); setMatrixFileSize(0); setMatrixThumbnailName(''); setMatrixThumbnailSize(0);
             return
         }
+        console.log('card4IsOk')
         if (!card234IsOk) {
             return
         }
-        const archivedFile = zip(femFile, cntFile, datFile1, datFile2)
+        console.log('card5IsOk')
+        const archivedFile = await zip(femFile, cntFile, datFile1, datFile2)
         const formData = {
             name: name,
             thumbnail: thumbnailName,
@@ -106,6 +112,7 @@ function Upload(props) {
             author: author !== '' ? author : null,
             contact: contact !== '' ? contact : null,
         }
+        console.log(formData)
         await API.graphql({ query: createCadMutation, variables: { input: formData } })
         setName('');
         setThumbnailName('');
