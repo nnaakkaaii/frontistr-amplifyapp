@@ -74,21 +74,25 @@ function Upload(props) {
         console.log('card1IsOk')
         if (!card2IsOk) {
             setCadFileName(''); setCadFileSize(0); setCadThumbnailName(''); setCadThumbnailSize(0);
+            setDisabled(false)
             return
         }
         console.log('card2IsOk')
         if (!card3IsOk) {
             setFemFile(''); setCntFile(''); setDatFile1(''); setDatFile2('');
             setFemThumbnailName(''); setFemThumbnailSize(0); setElementType(''); setElementCount(0); setNodeCount(0);
+            setDisabled(false)
             return
         }
         console.log('card3IsOk')
         if (!card4IsOk) {
             setMatrixFileName(''); setMatrixFileSize(0); setMatrixThumbnailName(''); setMatrixThumbnailSize(0);
+            setDisabled(false)
             return
         }
         console.log('card4IsOk')
         if (!card234IsOk) {
+            setDisabled(false)
             return
         }
         console.log('card5IsOk')
@@ -133,6 +137,7 @@ function Upload(props) {
         setMatrixThumbnailName('');
         setMatrixThumbnailSize(0);
         setDisabled(false)
+        props.setMode('default')
     }
     return (
         <div className="alert alert-secondary">

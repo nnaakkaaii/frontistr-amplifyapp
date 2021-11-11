@@ -58,7 +58,7 @@ function CadPage(props) {
             <Menu mode={mode} onSearchClick={doSearchClick} onUploadClick={doUploadClick} onDownloadClick={doDownloadClick} />
             <div>
                 {mode === 'search' && <Search cads={cads} setCads={setCads} />}
-                {mode === 'upload' && <Upload cads={cads} setCads={setCads} />}
+                {mode === 'upload' && <Upload cads={cads} setCads={setCads} setMode={setMode} />}
                 {mode === 'download' && <Download cads={cads}/>}
             </div>
             <Cad mode={mode} cads={cads}/>
