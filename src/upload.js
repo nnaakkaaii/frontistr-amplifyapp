@@ -33,6 +33,7 @@ const zip = async (femFile, cntFile, datFile1, datFile2) => {
 
 
 function Upload(props) {
+    const [disabled, setDisabled] = useState(false)
     const [name, setName] = useState('')
     const [thumbnailName, setThumbnailName] = useState('')
     const [thumbnailSize, setThumbnailSize] = useState(0)
@@ -57,8 +58,9 @@ function Upload(props) {
     const [matrixThumbnailName, setMatrixThumbnailName] = useState('')
     const [matrixThumbnailSize, setMatrixThumbnailSize] = useState('')
 
-    const doSubmit = (e) => {
+    const doSubmit = async (e) => {
         e.preventDefault()
+        setDisabled(true)
         const card1IsOk = doCheckCard1(name, thumbnailName, thumbnailSize, description, author, contact)
         const card2IsOk = doCheckCard2(cadFileName, cadFileSize, cadThumbnailName, cadThumbnailSize)
         const card3IsOk = doCheckCard3(femFile, cntFile, datFile1, datFile2, femThumbnailName, femThumbnailSize, elementType, elementCount, nodeCount)
@@ -104,26 +106,26 @@ function Upload(props) {
             author: author !== '' ? author : null,
             contact: contact !== '' ? contact : null,
         }
-        API.graphql({ query: createCadMutation, variables: { input: formData } }).then(res => {
-            setName('');
-            setThumbnailName('');
-            setDescription('');
-            setAuthor('');
-            setContact('');
-            setCadFileName('');
-            setCadFileSize(0);
-            setCadThumbnailName('');
-            setCadThumbnailSize(0);
-            setFemThumbnailName('');
-            setFemThumbnailSize(0);
-            setElementType('');
-            setElementCount(0);
-            setNodeCount(0);
-            setMatrixFileName('');
-            setMatrixFileSize(0);
-            setMatrixThumbnailName('');
-            setMatrixThumbnailSize(0);
-        })
+        await API.graphql({ query: createCadMutation, variables: { input: formData } })
+        setName('');
+        setThumbnailName('');
+        setDescription('');
+        setAuthor('');
+        setContact('');
+        setCadFileName('');
+        setCadFileSize(0);
+        setCadThumbnailName('');
+        setCadThumbnailSize(0);
+        setFemThumbnailName('');
+        setFemThumbnailSize(0);
+        setElementType('');
+        setElementCount(0);
+        setNodeCount(0);
+        setMatrixFileName('');
+        setMatrixFileSize(0);
+        setMatrixThumbnailName('');
+        setMatrixThumbnailSize(0);
+        setDisabled(false)
     }
     return (
         <div className="alert alert-secondary">
@@ -137,7 +139,7 @@ function Upload(props) {
                     <Card4 setMatrixFileName={setMatrixFileName} setMatrixFileSize={setMatrixFileSize} setMatrixThumbnailName={setMatrixThumbnailName} setMatrixThumbnailSize={setMatrixThumbnailSize} />
                 </div>
                 <div className="row justify-content-center my-3">
-                    <button className="btn btn-primary">Upload</button>
+                    <button className="btn btn-primary" disabled={disabled}>Upload</button>
                 </div>
             </form>
         </div>
