@@ -63,9 +63,11 @@ export function doCheckCard3(femFile, cntFile, datFile1, datFile2, femThumbnailN
             alert("extension of Dat file 1 is invalid")
             return false
         }
-        if (!dat2DataType[datFile2.name.split('.')[1]]) {
-            alert("extension of Dat file 2 is invalid")
-            return false
+        if (datFile2) {
+            if (!dat2DataType[datFile2.name.split('.')[1]]) {
+                alert("extension of Dat file 2 is invalid")
+                return false
+            }
         }
         if (!thumbnailDataType[femThumbnailName.split('.')[1]]) {
             alert("extension of FEM sample image is invalid")
@@ -83,9 +85,11 @@ export function doCheckCard3(femFile, cntFile, datFile1, datFile2, femThumbnailN
             alert("size of Dat file 1 must be lower than 1GB")
             return false
         }
-        if (datFile2.size > 1000000000) {
-            alert("size of Dat file 2 must be lower than 1GB")
-            return false
+        if (datFile2) {
+            if (datFile2.size > 1000000000) {
+                alert("size of Dat file 2 must be lower than 1GB")
+                return false
+            }
         }
         if (femThumbnailSize > 1000000000) {
             alert("size of FEM sample image must be lower than 1GB")
