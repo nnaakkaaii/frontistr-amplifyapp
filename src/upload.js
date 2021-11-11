@@ -10,7 +10,7 @@ import { doCheckCard1, doCheckCard2, doCheckCard3, doCheckCard4, doCheckCard234 
 import JSZip from "jszip";
 
 
-const zip = (femFile, cntFile, datFile1, datFile2) => {
+const zip = async (femFile, cntFile, datFile1, datFile2) => {
     if (!femFile || !cntFile || !datFile1) {
         return
     }
@@ -21,17 +21,14 @@ const zip = (femFile, cntFile, datFile1, datFile2) => {
     if (datFile2) {
         archived.file(datFile2.name, datFile2)
     }
-    return archived.generateAsync({type:"blob"}).then((content) => {
-        return new File(
-            [content],
-            femFile.name.split('.')[0] + '.zip',
-        { type: "application/octet-stream" }
-        )
-    }).then((content) => {
-        return Storage.put(content.name, content).then(() => {
-            return content
-        })
-    })
+    const content = await archived.generateAsync({type: "blob"})
+    const file = new File(
+        [content],
+        femFile.name.split('.')[0] + '.zip',
+        {type: 'application/octet-stream'}
+    )
+    await Storage.put(file.name, file)
+    return file
 }
 
 
