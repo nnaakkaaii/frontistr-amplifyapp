@@ -10,7 +10,7 @@ import { doCheckCard1, doCheckCard2, doCheckCard3, doCheckCard4, doCheckCard234 
 import JSZip from "jszip";
 
 
-const zip = (femFile, cntFile, datFile1, datFile2, setArchivedFile) => {
+const zip = (femFile, cntFile, datFile1, datFile2) => {
     if (!femFile || !cntFile || !datFile1) {
         return
     }
@@ -21,15 +21,15 @@ const zip = (femFile, cntFile, datFile1, datFile2, setArchivedFile) => {
     if (datFile2) {
         archived.file(datFile2.name, datFile2)
     }
-    archived.generateAsync({type:"blob"}).then((content) => {
+    return archived.generateAsync({type:"blob"}).then((content) => {
         return new File(
             [content],
             femFile.name.split('.')[0] + '.zip',
         { type: "application/octet-stream" }
         )
     }).then((content) => {
-        Storage.put(content.name, content).then(() => {
-            setArchivedFile(content)
+        return Storage.put(content.name, content).then(() => {
+            return content
         })
     })
 }
@@ -46,7 +46,6 @@ function Upload(props) {
     const [cadFileSize, setCadFileSize] = useState(0)
     const [cadThumbnailName, setCadThumbnailName] = useState('')
     const [cadThumbnailSize, setCadThumbnailSize] = useState('')
-    const [archivedFile, setArchivedFile] = useState()
     const [femFile, setFemFile] = useState()
     const [cntFile, setCntFile] = useState()
     const [datFile1, setDatFile1] = useState()
@@ -88,15 +87,15 @@ function Upload(props) {
         if (!card234IsOk) {
             return
         }
-        zip(femFile, cntFile, datFile1, datFile2, setArchivedFile)
+        const archivedFile = zip(femFile, cntFile, datFile1, datFile2)
         const formData = {
             name: name,
             thumbnail: thumbnailName,
             cad_file: cadFileName !== '' ? cadFileName : null,
             cad_size: cadFileSize > 0 ? cadFileSize : null,
             cad_thumbnail: cadThumbnailName !== '' ? cadThumbnailName : null,
-            fem_file: archivedFile !== '' ? archivedFile.name : null,
-            fem_size: archivedFile !== '' ? archivedFile.size : null,
+            fem_file: archivedFile ? archivedFile.name : null,
+            fem_size: archivedFile ? archivedFile.size : null,
             fem_thumbnail: femThumbnailName !== '' ? femThumbnailName : null,
             element_type: elementType !== '' ? elementType : null,
             num_elements: elementCount > 0 ? elementCount : null,
@@ -118,7 +117,6 @@ function Upload(props) {
             setCadFileSize(0);
             setCadThumbnailName('');
             setCadThumbnailSize(0);
-            setArchivedFile('');
             setFemThumbnailName('');
             setFemThumbnailSize(0);
             setElementType('');
